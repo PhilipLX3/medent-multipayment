@@ -1,0 +1,42 @@
+{
+    "family": "medent-stg-next",
+    "containerDefinitions": [
+        {
+            "name": "nextjs",
+            "image": "<IMAGE_NEXT>",
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "secrets": [
+                {"name": "BASIC_AUTH_USER", "valueFrom": "arn:aws:ssm:ap-northeast-1:217248978006:parameter/medent/stg/BASIC_AUTH_USER"},
+                {"name": "BASIC_AUTH_PASSWORD", "valueFrom": "arn:aws:ssm:ap-northeast-1:217248978006:parameter/medent/stg/BASIC_AUTH_PASSWORD"}
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/medent-stg-next",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-datetime-format": "%Y-%m-%d %H:%M:%S",
+                    "awslogs-stream-prefix": "ecs",
+                    "awslogs-create-group": "true"
+                }
+            },
+            "essential": true
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::217248978006:role/ECStaskRole",
+    "executionRoleArn": "arn:aws:iam::217248978006:role/ECStaskRole",
+    "cpu": "1024",
+    "memory": "2048",
+    "networkMode": "awsvpc",
+    "runtimePlatform": {
+        "operatingSystemFamily": "LINUX"
+    },
+    "requiresCompatibilities": [
+        "FARGATE"
+    ]
+}

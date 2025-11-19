@@ -1,0 +1,69 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_USER: DOCKER_USER
+    DOCKER_TOKEN: DOCKER_PWD
+  variables:
+    AWS_DEFAULT_REGION: ap-northeast-1
+    AWS_ACCOUNT_ID: 217248978006
+    IMAGE_REPO_NAME: medent-stg-next
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+
+  pre_build:
+    commands:
+      - echo "Pre-build phase started on `date`"
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - IMAGE_URI=$REPOSITORY_URI/$IMAGE_REPO_NAME
+      - IMAGE_TAG=$(echo $CODEBUILD_BUILD_ID | md5sum | cut -d' ' -f1)
+
+      # Login to ECR
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
+
+      # Download environment file from S3
+      - echo "Downloading environment file from S3..."
+      - aws s3 cp s3://medent-secrets/medent/.env.stg ./.env.local
+      - echo "Environment file downloaded successfully"
+
+  build:
+    commands:
+      - echo "Building Docker image..."
+      # Extract environment variables from .env.local
+      - export NEXT_PUBLIC_API_KEY=$(grep NEXT_PUBLIC_API_KEY ./.env.local | cut -d '=' -f2)
+      - export NEXT_PUBLIC_API_BASE_URL=$(grep NEXT_PUBLIC_API_BASE_URL ./.env.local | cut -d '=' -f2)
+      - echo "API_KEY extracted (length:" $(echo -n $NEXT_PUBLIC_API_KEY | wc -c) ")"
+      - echo "API_BASE_URL:" $NEXT_PUBLIC_API_BASE_URL
+      - docker build --platform linux/amd64 --build-arg NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY --build-arg NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL -t $IMAGE_REPO_NAME:latest -f ./docker/ecs/Dockerfile . --no-cache
+      - docker tag $IMAGE_REPO_NAME:latest $IMAGE_URI:$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo "Build completed on `date`"
+      - echo "Pushing the Docker image..."
+      - docker image ls -a
+      - docker push $IMAGE_URI:$IMAGE_TAG
+
+      - rm -f ./.env.local
+
+      # Create task definition file
+      - echo "Creating task definition file..."
+      - test -f taskdef-template-stg.json || echo "taskdef-template-stg.json not found"
+      - cat taskdef-template-stg.json | sed -e "s@<IMAGE_NEXT>@$IMAGE_URI:$IMAGE_TAG@g" > taskdef.json
+      - test -f taskdef.json && echo "taskdef.json created successfully" || echo "Failed to create taskdef.json"
+
+      # Create image detail file for CodeDeploy
+      - echo '[{"name":"nextjs","imageUri":"'$IMAGE_URI:$IMAGE_TAG'"}]' > imageDetail.json
+
+      # Verify contents
+      - cat imageDetail.json
+
+artifacts:
+  files:
+    - imageDetail.json
+    - appspec.yml
+    - taskdef.json

@@ -1,0 +1,116 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es6"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*",
+        "./*"
+      ],
+      "@/shared/*": [
+        "./src/shared/*"
+      ],
+      "@/_hooks": [
+        "./app/_hooks"
+      ],
+      "@/_hooks/*": [
+        "./app/_hooks/*"
+      ],
+      "@/applications/_components": [
+        "./app/(applications)/_components"
+      ],
+      "@/applications/_components/*": [
+        "./app/(applications)/_components/*"
+      ],
+      "@/applications/_services": [
+        "./app/(applications)/_services"
+      ],
+      "@/applications/_services/*": [
+        "./app/(applications)/_services/*"
+      ],
+      "@/applications/_types": [
+        "./app/(applications)/_types"
+      ],
+      "@/applications/_types/*": [
+        "./app/(applications)/_types/*"
+      ],
+      "@/contracts/_components": [
+        "./app/(contracts)/_components"
+      ],
+      "@/contracts/_components/*": [
+        "./app/(contracts)/_components/*"
+      ],
+      "@/contracts/_services": [
+        "./app/(contracts)/_services"
+      ],
+      "@/contracts/_services/*": [
+        "./app/(contracts)/_services/*"
+      ],
+      "@/contracts/_types": [
+        "./app/(contracts)/_types"
+      ],
+      "@/contracts/_types/*": [
+        "./app/(contracts)/_types/*"
+      ],
+      "@/projects/_components": [
+        "./app/(projects)/_components"
+      ],
+      "@/projects/_components/*": [
+        "./app/(projects)/_components/*"
+      ],
+      "@/projects/_services": [
+        "./app/(projects)/_services"
+      ],
+      "@/projects/_services/*": [
+        "./app/(projects)/_services/*"
+      ],
+      "@/projects/_types": [
+        "./app/(projects)/_types"
+      ],
+      "@/projects/_types/*": [
+        "./app/(projects)/_types/*"
+      ],
+      "@/auth/_components": [
+        "./app/(auth)/_components"
+      ],
+      "@/auth/_components/*": [
+        "./app/(auth)/_components/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "target": "ES2017"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "out/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    ".next/dev/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

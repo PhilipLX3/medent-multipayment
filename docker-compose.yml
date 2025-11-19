@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  medent-multipayment-nextjs :
+    build:
+      context: .
+      dockerfile: ./docker/ecs/Dockerfile #using prod dockerfile to simulate local-deploy-test.sh
+    env_file:
+      - ./.env
+    ports:
+      - '${PORT:-3000}:3000'
+    volumes:
+      - .:/workspace
+    #      - /workspace/node_modules

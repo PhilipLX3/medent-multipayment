@@ -1,0 +1,75 @@
+/* モバイル向けの追加スタイル */
+
+/* タッチデバイス向けの最適化 */
+@media (hover: hover) and (pointer: fine) {
+  /* デスクトップのホバー効果 */
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* タッチデバイス向けの調整 */
+  .btn-primary,
+  .btn-secondary {
+    @apply py-3; /* ボタンを少し大きく */
+  }
+  
+  .input-field {
+    @apply py-3 text-base; /* 入力フィールドを大きく */
+    font-size: 16px; /* iOSのズーム防止 */
+  }
+}
+
+/* スマートフォン向けの調整 */
+@media (max-width: 640px) {
+  /* フォームステップのコンパクト表示 */
+  .step-indicator {
+    @apply text-xs;
+  }
+  
+  /* 見出しサイズの調整 */
+  h1 {
+    @apply text-xl;
+  }
+  
+  h2 {
+    @apply text-lg;
+  }
+  
+  /* フォームラベルの調整 */
+  label {
+    @apply text-sm font-semibold;
+  }
+  
+  /* ボタングループの縦配置 */
+  .button-group-mobile {
+    @apply flex flex-col space-y-2;
+  }
+  
+  /* カードのパディング調整 */
+  .card-body-mobile {
+    @apply px-3 py-4;
+  }
+}
+
+/* iPhone SE等の小さい画面対応 */
+@media (max-width: 375px) {
+  .container-mobile {
+    @apply px-3;
+  }
+  
+  /* ステップインジケーターをさらにコンパクトに */
+  .step-text-mobile {
+    @apply hidden;
+  }
+}
+
+/* 横向き対応 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .form-container-mobile {
+    @apply py-2;
+  }
+  
+  /* ヘッダーを小さく */
+  .header-mobile {
+    @apply py-2;
+  }
+}
