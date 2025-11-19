@@ -12,7 +12,7 @@ import Cog6ToothIcon from '@heroicons/react/24/outline/Cog6ToothIcon';
 
 const navigation = [
   { name: '新規申込', href: '/applications/new' },
-  { name: '案件一覧', href: '/projects' },
+  { name: '新規決済依頼', href: '/payments/new' },
   { name: '契約一覧', href: '/contracts' },
 ];
 

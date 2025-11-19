@@ -8,37 +8,6 @@ export {
   type SortConfig,
 } from './payment';
 
-// Re-export from application.ts
-export {
-  type SystemValue,
-  type UserBrief,
-  type ApplicationResponse,
-  type AttachmentResponse,
-  type CreateApplicationRequest,
-  type UpdateApplicationRequest,
-  type SendToClinicRequest,
-  type ApplicationFilters,
-  type ApplicationsListResponse,
-} from './application';
-
-// Re-export from project.ts
-export {
-  type Project,
-  type ProjectFilters,
-  type CreateProjectRequest,
-  type UpdateProjectRequest,
-  type ProjectsResponse,
-} from './project';
-
-// Re-export from contract.ts
-export {
-  type Contract,
-  type ContractFilters,
-  type CreateContractRequest,
-  type UpdateContractRequest,
-  type ContractsResponse,
-} from './contract';
-
 export interface User {
   id: string;
   name: string;

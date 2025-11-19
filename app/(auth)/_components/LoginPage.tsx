@@ -32,8 +32,8 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await login(data.email, data.password);
-      // デフォルトで案件一覧画面に遷移
-      router.push('/projects');
+      // デフォルトで新規決済依頼画面に遷移
+      router.push('/payments/new');
     } catch (error) {
       // Error is handled in the store
     } finally {
