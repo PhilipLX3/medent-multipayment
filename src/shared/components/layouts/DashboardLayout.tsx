@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import Cog6ToothIcon from '@heroicons/react/24/outline/Cog6ToothIcon';
 
 const navigation = [
-  { name: '新規申込', href: '/applications/new' },
+  { name: '決済一覧', href: '/payments' },
   { name: '新規決済依頼', href: '/payments/new' },
   { name: '契約一覧', href: '/contracts' },
 ];
@@ -55,7 +55,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               </div>
               <div className="hidden sm:ml-4 lg:ml-6 sm:flex sm:space-x-4 lg:space-x-8">
                 {currentNavigation.map((item) => {
-                  const isActive = pathname?.startsWith(item.href.split('/').slice(0, 2).join('/'));
+                  const isActive = pathname === item.href || pathname === `${item.href}/`;
                   return (
                     <Link
                       key={item.name}
@@ -200,7 +200,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <div className="flex-1 py-4">
               <div className="space-y-1 px-2">
                 {currentNavigation.map((item) => {
-                  const isActive = pathname?.startsWith(item.href.split('/').slice(0, 2).join('/'));
+                  const isActive = pathname === item.href || pathname === `${item.href}/`;
                   return (
                     <Link
                       key={item.name}
