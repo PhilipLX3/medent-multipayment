@@ -32,8 +32,8 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await login(data.email, data.password);
-      // デフォルトで新規決済依頼画面に遷移
-      router.push('/payments/new');
+      // デフォルトで決済一覧画面に遷移
+      router.push('/payments');
     } catch (error) {
       // Error is handled in the store
     } finally {
