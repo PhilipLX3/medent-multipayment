@@ -8,6 +8,7 @@ import { Drawer, IconButton } from '@mui/material';
 import { Close as CloseIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { useAuthStore } from '@/shared/store/authStore';
 import clsx from 'clsx';
+import Cog6ToothIcon from '@heroicons/react/24/outline/Cog6ToothIcon';
 
 const navigation = [
   { name: '新規申込', href: '/applications/new' },
@@ -74,6 +75,13 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             </div>
             {isAuthenticated && (
               <div className="hidden sm:ml-2 lg:ml-6 sm:flex sm:items-center">
+                <Link
+                  href="/settings/clinic"
+                  className="p-1 md:p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md mr-1 md:mr-3"
+                  title="医院設定"
+                >
+                  <Cog6ToothIcon className="h-5 w-5 md:h-6 md:w-6" />
+                </Link>
                 <Menu as="div" className="relative ml-1 md:ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
