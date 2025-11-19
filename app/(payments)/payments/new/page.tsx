@@ -64,10 +64,11 @@ export default function NewPaymentPage() {
       } catch (error) {
         // モック用：APIエラーでも成功として処理
         console.log('API error, using mock data for demo purposes');
+        const mockLinkId = `${Date.now()}${Math.random().toString(36).substr(2, 9)}`;
         return {
           data: {
             payment_id: `MOCK-${Date.now()}`,
-            payment_link: `${window.location.origin}/apply/mock-${Date.now()}`,
+            payment_link: `${window.location.origin}/apply/${mockLinkId}`,
             patient_name: data.patient_name,
             amount: data.amount,
             treatment_name: data.treatment_name,
