@@ -105,23 +105,9 @@ export default function NewPaymentPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // 姓と名のバリデーション
-    if (!lastName || !firstName) {
-      toast.error('姓と名を入力してください');
-      return;
-    }
-    // 治療名と金額のバリデーション
-    if (!formData.treatment_name) {
-      toast.error('治療名を入力してください');
-      return;
-    }
-    if (!formData.amount) {
-      toast.error('金額を入力してください');
-      return;
-    }
     const requestData = {
       patient_id: formData.patient_id || undefined,
-      patient_name: `${lastName} ${firstName}`,
+      patient_name: (lastName || firstName) ? `${lastName} ${firstName}`.trim() : undefined,
       patient_phone: formData.patient_phone || undefined,
       treatment_name: formData.treatment_name || undefined,
       amount: formData.amount || undefined,
@@ -383,7 +369,7 @@ export default function NewPaymentPage() {
                   </div>
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     電話番号
                   </label>
@@ -394,7 +380,7 @@ export default function NewPaymentPage() {
                     className="input-field"
                     placeholder="090-1234-5678"
                   />
-                </div>
+                </div> */}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -481,8 +467,8 @@ export default function NewPaymentPage() {
           {/* 説明文 */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <p className="text-sm text-blue-800">
-              <strong>患者ID以外は必須項目です。</strong>
-              患者氏名、治療名、金額を入力して「次へ」ボタンを押してください。
+              <strong>全ての項目は任意入力です。</strong>
+              何も入力せずに「次へ」ボタンを押すことができます。患者様の情報は後から申込み画面で入力可能です。
             </p>
           </div>
 
@@ -503,7 +489,7 @@ export default function NewPaymentPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                  姓 <span className="text-red-600">*</span>
+                  姓 (任意)
                 </label>
                 <input
                   type="text"
@@ -512,12 +498,11 @@ export default function NewPaymentPage() {
                   onChange={(e) => setLastName(e.target.value)}
                   className="input-field"
                   placeholder="山田"
-                  required
                 />
               </div>
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                  名 <span className="text-red-600">*</span>
+                  名 (任意)
                 </label>
                 <input
                   type="text"
@@ -526,12 +511,11 @@ export default function NewPaymentPage() {
                   onChange={(e) => setFirstName(e.target.value)}
                   className="input-field"
                   placeholder="太郎"
-                  required
                 />
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="patient_phone" className="block text-sm font-medium text-gray-700">
                 患者電話番号 (SMS送信用)
               </label>
@@ -542,11 +526,11 @@ export default function NewPaymentPage() {
                 className="input-field"
                 placeholder="090-1234-5678 または 09012345678"
               />
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="treatment_name" className="block text-sm font-medium text-gray-700">
-                治療名 <span className="text-red-600">*</span>
+                治療名 (任意)
               </label>
               <input
                 type="text"
@@ -555,13 +539,12 @@ export default function NewPaymentPage() {
                 onChange={(e) => setFormData({...formData, treatment_name: e.target.value})}
                 className="input-field"
                 placeholder="インプラント"
-                required
               />
             </div>
 
             <div>
               <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                金額 (円) <span className="text-red-600">*</span>
+                金額 (円) (任意)
               </label>
               <input
                 type="text"
@@ -570,7 +553,6 @@ export default function NewPaymentPage() {
                 onChange={(e) => handleAmountChange(e.target.value)}
                 className="input-field"
                 placeholder="5,000,000"
-                required
               />
             </div>
 
